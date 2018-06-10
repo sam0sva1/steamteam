@@ -1,10 +1,10 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const build = (path) => {
     const file = fs.readFileSync(path);
     return JSON.parse(file);
 }
 
-module.exports = {
+export default {
     build,
 };

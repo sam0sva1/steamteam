@@ -1,3 +1,4 @@
+import path from 'path';
 import Koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';
@@ -7,15 +8,16 @@ import { Configer } from './modules';
 import { steam as steamService } from './services';
 import { commonList } from './controllers';
 
-const config = Configer.build('./config.json');
 
 const app = new Koa();
 const router = new Router();
 
 app.use(logger());
+
+const config = Configer.build('./config.json');
 app.context.config = config;
 
-app.use(serve(__dirname + '/public'));
+app.use(serve(path.resolve(__dirname, '..', 'public')));
 
 router.get('/', async ctx => {
     ctx.body = 'Run motherfucker run!';

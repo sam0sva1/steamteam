@@ -1,4 +1,4 @@
-const compare = (lists) => {
+export default (lists) => {
     console.time('compare');
     const sorted = lists.sort(((a, b) => a.response.game_count - b.response.game_count));
 
@@ -27,6 +27,3 @@ const compare = (lists) => {
 
     return common;
 }
-
-
-module.exports = compare;
