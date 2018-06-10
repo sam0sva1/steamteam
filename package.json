@@ -9,10 +9,14 @@
   },
   "dependencies": {
     "@koa/cors": "2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
+    "koa-static": "^4.0.3",
     "nodemon": "^1.17.5",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5"
