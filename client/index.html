@@ -3,22 +3,79 @@
     <head>
         <meta charset="UTF-8">
         <title>SteamTeam</title>
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <div id="app">
-            <header>
-                <div>
-                    SteamTeam
-                </div>
-            </header>
-            <main>
-                <aside>
-                    <input>
-                </aside>
-                <section>
-                    {{ message }}
-                </section>
-            </main>
+            <div class="page">
+                <header class="page__header header">
+                    <div class="header__content">
+                        <div class="header__title">
+                            SteamTeam
+                        </div>
+                    </div>
+                </header>
+                <main class="page__container container">
+                    <aside class="container__sidebar sidebar">
+                        <div class="sidebar__label">
+                            Players
+                        </div>
+
+                        <div class="sidebar__block sidebar__input-block">
+                            <input v-model="userName" placeholder="Type username here" class="sidebar__input">
+                            <button v-if="userName" @click="onClick" class="sidebar__input-button">
+                                <div
+                                    class="sidebar__cross sidebar__input-cross"
+                                    v-bind:class="crossClasses"
+                                >
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="sidebar__block sidebar__players-block" v-if="players.length">
+                            <div class="sidebar__player player" v-for="player in players">
+                                <div class="player__img">
+                                    <img :src="player.avatarmedium">
+                                </div>
+                                <div class="player__info">
+                                    <div class="player__name">
+                                        {{ player.personaname }}
+                                    </div>
+                                    <div
+                                        class="sidebar__cross player__cross"
+                                        @click="onPlayerCrossClick(player.steamid)"
+                                    >
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <section v-if="players.length" class="container__game-list game-list">
+                        <div class="game-list__label">
+                            Games
+                            <span v-if="players.length < 2" class="game-list__message game-list__message_requirement">(requires more then one player)</span>
+                            <span v-else-if="commonGames.length" class="game-list__message game-list__message_total">(total: {{ commonGames.length }})</span>
+                            <span v-else-if="!commonGames.length" class="game-list__message game-list__message_info">(No common)</span>
+                        </div>
+
+                        <div v-if="commonGames.length">
+                            <div class="game-list__game game" v-for="game in commonGames">
+                                <div class="game__title">
+                                    {{ game.name}}
+                                </div>
+                                <div class="game__genre">
+                                    {{ game.genre }}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script src="/js/main.js"></script>

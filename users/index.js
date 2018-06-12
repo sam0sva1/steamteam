@@ -9,6 +9,4 @@ const lists = files.map((name) => {
     return JSON.parse(file);
 });
 
-module.exports = {
-    lists,
-}
+module.exports = lists;

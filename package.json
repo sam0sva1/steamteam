@@ -12,6 +12,7 @@
   "dependencies": {
     "@koa/cors": "2",
     "autoprefixer": "^8.6.2",
+    "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
@@ -30,7 +31,9 @@
     "koa-static": "^4.0.3",
     "nodemon": "^1.17.5",
     "postcss": "^6.0.22",
+    "postcss-import": "^11.1.0",
     "postcss-nested": "^3.0.0",
+    "postcss-nested-ancestors": "^2.0.0",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
     "run-sequence": "^2.2.1"

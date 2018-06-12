@@ -9,8 +9,7 @@ export default (lists) => {
     for (let i = 1; i < sorted.length; i += 1) {
         const list = sorted[i].response.games;
 
-        if (!list) continue;
-        if (!list.length) return [];
+        if (!list || !list.length) return [];
 
         initial = common;
         common = [];
