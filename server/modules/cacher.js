@@ -15,9 +15,9 @@ const cacher = {
   setStorage,
   init: (filePath) => {
     if (filePath && fs.existsSync(filePath)) {
-      const file = fs.readFileSync('./cached.json');
-    const list = JSON.parse(file);
-    setStorage(list);
+      const file = fs.readFileSync(filePath);
+      const list = JSON.parse(file);
+      setStorage(list);
     } else {
       console.log('NO CACHED!!')
     }

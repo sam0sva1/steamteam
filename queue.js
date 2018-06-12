@@ -34,8 +34,8 @@ const getDetalesById = async (id) => {
 };
 
 
-async function queue(list) {
-    console.time('queue');
+async function cacheWarming(list) {
+    console.time('cacheWarming');
     const len = list.length;
 
     for (let i = 0; i < len; i += 1) {
@@ -46,8 +46,8 @@ async function queue(list) {
         await sleep;
     }
 
-    fs.writeFileSync('./cached.json', JSON.stringify(cacher.getStorage(), null, '    '));
-    console.timeEnd('queue');
+    fs.writeFileSync('./cacheData/cached.json', JSON.stringify(cacher.getStorage(), null, '    '));
+    console.timeEnd('cacheWarming');
 }
 
 queue(listOfId);

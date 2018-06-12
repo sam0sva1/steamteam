@@ -8,9 +8,10 @@ import { Configer, Cacher } from './modules';
 import { SteamService } from './services';
 import { commonList } from './controllers';
 
-Cacher.init('./cached.json');
+Cacher.init('./cacheData/cached.json');
 const app = new Koa();
 const router = new Router();
+const port = 8080;
 
 app.use(logger());
 
@@ -47,6 +48,6 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(8080, () => {
-    console.log('GO!');
+app.listen(port, () => {
+    console.info(`Server is running of port ${port}.`);
 });
