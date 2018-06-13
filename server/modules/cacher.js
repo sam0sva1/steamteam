@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import { SteamSpyService } from '../services';
-import { Sleep } from '../modules';
+import { Sleep, saveCachedData } from '../modules';
 
 let cacheStorage = {};
 
@@ -43,14 +43,6 @@ async function cacheGameList(list) {
   }
 
   console.timeEnd('cacheGameList');
-}
-
-function saveCachedData(data) {
-  if (!fs.existsSync('./cacheData')) {
-    fs.mkdirSync('./cacheData');
-  }
-
-  fs.writeFileSync('./cacheData/cachec.json', JSON.stringify(data, null, '  '));
 }
 
 async function cacheWarming(listPath) {

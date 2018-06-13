@@ -22,8 +22,13 @@
                         </div>
 
                         <div class="sidebar__block sidebar__input-block">
-                            <input v-model="userName" placeholder="Type username here" class="sidebar__input">
-                            <button v-if="userName" @click="onClick" class="sidebar__input-button">
+                            <input
+                                v-model="userName"
+                                placeholder="Type username here"
+                                class="sidebar__input"
+                                @keyup.enter="onEnterPress"
+                            >
+                            <button v-if="userName" @click="onPlusClick" class="sidebar__input-button">
                                 <div
                                     class="sidebar__cross sidebar__input-cross"
                                     v-bind:class="crossClasses"
@@ -59,6 +64,7 @@
                         <div class="game-list__label">
                             Games
                             <span v-if="players.length < 2" class="game-list__message game-list__message_requirement">(requires more then one player)</span>
+                            <span v-else-if="commonGamesAreLoading" class="game-list__message game-list__message_info">Loading. Wait please...</span>
                             <span v-else-if="commonGames.length" class="game-list__message game-list__message_total">(total: {{ commonGames.length }})</span>
                             <span v-else-if="!commonGames.length" class="game-list__message game-list__message_info">(No common)</span>
                         </div>

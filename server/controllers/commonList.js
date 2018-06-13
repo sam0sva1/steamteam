@@ -1,5 +1,14 @@
-import { SteamService } from '../services';
-import { compare, Cacher } from '../modules';
+import { SteamService, SteamSpyService } from '../services';
+import { compare, Cacher, Sleep} from '../modules';
+
+let sleep;
+async function getGameDetails(id) {
+    await sleep;
+    const gameDetaild = await SteamSpyService.getGameDetalesById(id);
+    sleep = Sleep();
+    Cacher.set(id, gameDetaild);
+    return gameDetaild;
+}
 
 const commonList = async ctx => {
     const { user_ids } = ctx.query;
@@ -18,10 +27,10 @@ const commonList = async ctx => {
 
         for (let i = 0; i < gamesAmount; i += 1) {
             const game = commonGames[i];
-            const details = Cacher.get(game.appid);
+            let details = Cacher.get(`${game.appid}`);
 
-            if (!details || !details.tag) {
-                 
+            if (!details || !details.tags) {
+                details = await getGameDetails(game.appid);
             }
 
             if ('Multiplayer' in details.tags) {
