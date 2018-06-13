@@ -28,7 +28,12 @@
                                 class="sidebar__input"
                                 @keyup.enter="onEnterPress"
                             >
-                            <button v-if="userName" @click="onPlusClick" class="sidebar__input-button">
+                            <button
+                                v-if="userName"
+                                @click="onPlusClick"
+                                class="sidebar__input-button"
+                                v-bind:class="{ 'sidebar__input-button_loading': checkingUserName }"
+                            >
                                 <div
                                     class="sidebar__cross sidebar__input-cross"
                                     v-bind:class="crossClasses"

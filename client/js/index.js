@@ -32,7 +32,7 @@ var app = new Vue({
                 if (value) {
                     vm.getUserByName(value);
                 }
-            }, 600);
+            }, 700);
         },
         players: function(players) {
             if (players.length > 1) {
@@ -45,19 +45,18 @@ var app = new Vue({
     methods: {
         getUserByName: function(name) {
             this.checkingUserName = true;
-            const vm = this;
             fetch(`/user/${name}`)
                 .then(res => res.json())
                 .then(res => {
-                    vm.checkingUserName = false;
-                    this.userNameWasChecked = true;
-                    
                     if (res.success) {
                         this.bufferedPlayer = res.player;
-                        vm.correctUserName = true;
+                        this.correctUserName = true;
                     } else {
-                        vm.correctUserName = false;
+                        this.correctUserName = false;
                     }
+
+                    this.checkingUserName = false;
+                    this.userNameWasChecked = true;
                 });
         },
         clean: function() {
@@ -105,6 +104,9 @@ var app = new Vue({
     },
     computed: {
         crossClasses: function() {
+            if (this.checkingUserName) {
+                return 'sidebar__cross_active';
+            }
             if (this.userNameWasChecked) {
                 return `sidebar__cross_${(this.correctUserName && !this.checkIfAdded()) ? 'correct' : 'wrong'}`;
             }

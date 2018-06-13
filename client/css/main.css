@@ -72,6 +72,7 @@
             }
 
             &__input-button {
+                position: relative;
                 width: 50px;
                 height: 50px;
                 border-radius: 25px;
@@ -81,6 +82,12 @@
                 &:focus {
                     outline: none;
                 }
+
+                &_loading {
+                    animation-name: cross-button-loader;
+                    animation-duration: 1.5s;
+                    animation-iteration-count: infinite;
+                }
             }
 
             &__input-cross {
@@ -88,7 +95,9 @@
             }
 
             &__cross {
-                position: relative;
+                position: absolute;
+                top: calc(50% - 15px);
+                left: calc(50% - 15px);
                 width: 30px;
                 height: 30px;
                 transition: all .3s ease;
@@ -233,3 +242,18 @@
         }
     }
 }
+
+@keyframes cross-button-loader {
+    20% {
+      border-left-width: 2px;
+    }
+    40% {
+      border-bottom-width: 2px;
+    }
+    60% {
+      border-right-width: 2px;
+    }
+    80% {
+      border-top-width: 2px;
+    }
+  }
