@@ -46,6 +46,15 @@ var app = new Vue({
         getUserByName: function(name) {
             this.checkingUserName = true;
             fetch(`/user/${name}`)
+                .then(res => {
+                    if (res.status !== 200) {
+                        this.checkingUserName = false;
+                        this.userNameWasChecked = true;
+                        this.correctUserName = false;
+                    }
+
+                    return res;
+                })
                 .then(res => res.json())
                 .then(res => {
                     if (res.success) {
