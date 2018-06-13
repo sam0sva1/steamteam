@@ -90,14 +90,8 @@
                 }
             }
 
-            &__input-cross {
-                margin: 0 auto;
-            }
-
             &__cross {
-                position: absolute;
-                top: calc(50% - 15px);
-                left: calc(50% - 15px);
+                position: relative;
                 width: 30px;
                 height: 30px;
                 transition: all .3s ease;
@@ -132,6 +126,13 @@
                         background-color: rgb(248, 148, 148);
                     }
                 }
+            }
+
+            &__input-cross {
+                margin: 0 auto;
+                position: absolute;
+                top: calc(50% - 15px);
+                left: calc(50% - 15px);
             }
 
             &__players-block {
