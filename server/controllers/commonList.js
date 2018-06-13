@@ -14,12 +14,20 @@ const commonList = async ctx => {
         }
 
         const multiplayerGames = [];
-        commonGames.forEach((game) => {
+        const gamesAmount = commonGames.length;
+
+        for (let i = 0; i < gamesAmount; i += 1) {
+            const game = commonGames[i];
             const details = Cacher.get(game.appid);
+
+            if (!details || !details.tag) {
+                 
+            }
+
             if ('Multiplayer' in details.tags) {
                 multiplayerGames.push(details);
             }
-        });
+        }
 
         ctx.status = 200;
         ctx.body = multiplayerGames;
@@ -29,4 +37,4 @@ const commonList = async ctx => {
     }
 };
 
-module.exports = commonList;
+export default commonList;
