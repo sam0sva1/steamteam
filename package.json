@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "gulp build && node server.js",
-    "dev": "nodemon server.js",
+    "dev": "nodemon --watch ./server/ server.js",
     "build": "gulp build",
     "watch": "gulp"
   },
@@ -33,6 +33,7 @@
     "nodemon": "^1.17.5",
     "postcss": "^6.0.22",
     "postcss-import": "^11.1.0",
+    "postcss-mixins": "^6.2.0",
     "postcss-nested": "^3.0.0",
     "postcss-nested-ancestors": "^2.0.0",
     "request": "^2.87.0",

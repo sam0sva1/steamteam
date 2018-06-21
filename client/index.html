@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>SteamTeam</title>
         <link rel="stylesheet" href="css/style.css">
     </head>
@@ -21,8 +22,9 @@
                             Players
                         </div>
 
-                        <div class="sidebar__block sidebar__input-block">
+                        <label for="user-name" class="sidebar__block sidebar__input-block">
                             <input
+                                id="user-name"
                                 v-model="userName"
                                 placeholder="Type username here"
                                 class="sidebar__input"
@@ -42,7 +44,7 @@
                                     <div></div>
                                 </div>
                             </button>
-                        </div>
+                        </label>
 
                         <div class="sidebar__block sidebar__players-block" v-if="players.length">
                             <div class="sidebar__player player" v-for="player in players">
@@ -53,13 +55,13 @@
                                     <div class="player__name">
                                         {{ player.personaname }}
                                     </div>
-                                    <div
+                                    <button
                                         class="sidebar__cross player__cross"
                                         @click="onPlayerCrossClick(player.steamid)"
                                     >
                                         <div></div>
                                         <div></div>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -76,9 +78,14 @@
 
                         <div v-if="commonGames.length">
                             <div class="game-list__game game" v-for="game in commonGames">
-                                <div class="game__title">
-                                    {{ game.name}}
+                                <div
+                                    class="game__picture"
+                                    v-bind:style="{ backgroundImage: `url('http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg')` }"
+                                >
                                 </div>
+                                <a class="game__title" :href="`https://store.steampowered.com/app/${game.appid}`" target="_blank">
+                                    {{ game.name }}
+                                </a>
                                 <div class="game__genre">
                                     {{ game.genre }}
                                 </div>

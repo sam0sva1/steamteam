@@ -1,8 +1,8 @@
-const Sleep = function() {
+const Sleep = function(time) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve();
-        }, 250);
+        }, time);
     });
 }
 

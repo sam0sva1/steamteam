@@ -28,7 +28,7 @@ Server is running of port ${port}
 =================================
     `);
 
-    Cacher.init('./cacheData/cached.json');
+    // Cacher.init('./cacheData/cached.json');
 });
 
 process.on('SIGINT', function onSigterm () {
@@ -43,7 +43,7 @@ function shutdown() {
             process.exit(1);
         }
 
-        saveCachedData(Cacher.getStorage());
+        // saveCachedData(Cacher.getStorage());
         process.exit();
     });
 }

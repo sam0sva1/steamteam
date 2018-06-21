@@ -37,18 +37,23 @@ const iter = (res) => {
 };
 
 const getListOfTopGames = async () => {
-    const foreverPromise = getTop100Forever();
-    await Sleep();
-    const TwoWeeksPromise = getTop100In2Weeks();
-    await Sleep();
-    const byOwnersPromise = getTop100Owners();
-
-    const topForever = await foreverPromise;
-    iter(topForever);
-    const top2Weeks = await TwoWeeksPromise;
-    iter(top2Weeks);
-    const topByOwners = await byOwnersPromise;
-    iter(topByOwners);
+    try {
+        const foreverPromise = getTop100Forever();
+        await Sleep(250);
+        const TwoWeeksPromise = getTop100In2Weeks();
+        await Sleep(250);
+        const byOwnersPromise = getTop100Owners();
+    
+        const topForever = await foreverPromise;
+        iter(topForever);
+        const top2Weeks = await TwoWeeksPromise;
+        iter(top2Weeks);
+        const topByOwners = await byOwnersPromise;
+        iter(topByOwners);
+    } catch (err) {
+        console.error(err.message);
+        console.error(err.cause);
+    }
 
     const sorted = gameList.sort(((a, b) => a - b));
 

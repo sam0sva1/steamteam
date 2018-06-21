@@ -15,7 +15,7 @@ methods.getPlayerDetails = async (id, key) => {
 }
 
 methods.getGamesListById = async (id, key) => {
-    return await fetcher(`${baseUrl}/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${id}`);
+    return await fetcher(`${baseUrl}/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${id}&include_appinfo=1`);
 }
 
 export default methods;
