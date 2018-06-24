@@ -35,7 +35,7 @@ app.use(userRouter.routes());
 app.use(gamesRouter.routes());
 
 app.on('error', (err) => {
-    console.error('Error message', error.message);
+    console.error('Error message', err.message);
     console.error('Error', err);
 });
 

@@ -1,9 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-import { SteamSpyService } from '../services';
-import { saveCachedData } from '../modules';
-import queue from '../modules/queue';
 
 let cacheStorage = {};
 

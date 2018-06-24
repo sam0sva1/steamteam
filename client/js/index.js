@@ -1,6 +1,18 @@
+function getParams(str) {
+    const search = str.replace('?', '');
+    const pairs = search.split('&');
+    const params = {};
+    pairs.forEach(pair => {
+        const splited = pair.split('=');
+        params[splited[0]] = splited[1];
+    });
+    return params;
+}
+
+
 var app = new Vue({
     el: '#app',
-    data: {
+    data:  {
         userName: '',
         message: 'Привет, Vue!',
         userNameWasChecked: false,
@@ -30,6 +42,25 @@ var app = new Vue({
         ],
         commonGamesAreLoading: false,
     },
+    created: function() {
+        const params = getParams(location.search);
+
+        if (params.ids) {
+            fetch(`/user/list?user_ids=${params.ids}`)
+                .then(res => {
+                    if (res.status === 200) {
+                        return res.json();
+                    }
+
+                    return res;
+                })
+                .then((res) => {
+                    this.players = res.players;
+                });
+            
+            this.getCommonGames(params.ids);
+        }
+    },
     watch: {
         userName: function(token, prev) {
             this.clean();
@@ -54,6 +85,7 @@ var app = new Vue({
             }, 700);
         },
         players: function(players) {
+            this.writeSearch();
             if (players.length > 1) {
                 this.getCommonGames();
             } else {
@@ -62,6 +94,14 @@ var app = new Vue({
         },
     },
     methods: {
+        writeSearch: function() {
+            const ids = this.players.map(player => player.steamid);
+            if (ids.length > 1) {
+                history.replaceState({}, 'Main page', `${location.origin}${location.pathname}?ids=${ids.join(',')}`)
+            } else {
+                history.replaceState({}, 'Main page', `${location.origin}${location.pathname}`);
+            }
+        },
         getUserByName: function(name) {
             this.checkingUserName = true;
             fetch(`/user/${name}`)
@@ -111,10 +151,13 @@ var app = new Vue({
         onPlayerCrossClick: function(id) {
             this.players = this.players.filter(player => player.steamid !== id);
         },
-        getCommonGames: function() {
-            const query = this.players.map(player => player.steamid).join(',');
+        getCommonGames: function(incomeIds) {
+            let ids = incomeIds;
+            if (!ids) {
+                ids = this.players.map(player => player.steamid).join(',');
+            }
             this.commonGamesAreLoading = true;
-            fetch(`/games/common?user_ids=${query}`)
+            fetch(`/games/common?user_ids=${ids}`)
                 .then(res => res.json())
                 .then((res) => {
                     this.commonGames = res;
