@@ -6,7 +6,12 @@ const methods = {};
 const baseUrl = 'http://steamspy.com';
 
 const getGameDetalesById = async (id) => {
-    return await fetcher(`${baseUrl}/api.php?request=appdetails&appid=${id}`);
+    const response = await fetcher(`${baseUrl}/api.php?request=appdetails&appid=${id}`);
+    if (response.name) {
+        return response;
+    }
+
+    throw new Error('Game details not found!');
 };
 
 const getTop100Forever = async (id) => {

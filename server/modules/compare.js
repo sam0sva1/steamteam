@@ -1,13 +1,13 @@
 export default (lists) => {
     console.time('compare');
-    const sorted = lists.sort(((a, b) => a.response.game_count - b.response.game_count));
+    const sorted = lists.sort(((a, b) => a.length - b.length));
 
     let initial = [];
-    let common = sorted[0].response.games;
+    let common = sorted[0];
     
     
     for (let i = 1; i < sorted.length; i += 1) {
-        const list = sorted[i].response.games;
+        const list = sorted[i];
 
         if (!list || !list.length) return [];
 

@@ -1,80 +1,27 @@
 import Router from 'koa-router';
-import Sleep from '../modules/sleep';
-import Cacher from '../modules/cacher';
 import compare from '../modules/compare';
-import { SteamSpyService, SteamService } from '../services';
+import queue from '../modules/queue';
+import { SteamService } from '../services';
 
-
-let list = [];
-const handlersBox = {};
-let listIsEmpty = true;
-let counter = 0;
-let isRunning = false;
-
-let sleeper = Sleep();
-async function runRequests() {
-    if (isRunning) return;
-    isRunning = true;
-
-    async function watcher(i) {
-        await sleeper;
-        const id = list[i];
-
-        if (!id) {
-            listIsEmpty = true;
-            return;
-        }
-
-        const handlers = handlersBox[id];
-
-        const gameDetails = await SteamSpyService.getGameDetalesById(id);
-
-        sleeper = Sleep(250);
-
-        Cacher.set(id, gameDetails);
-
-        while (handlers.length) {
-            const handler = handlers.pop();
-            handler(gameDetails);
-        }
-    }
-
-    do {
-        await watcher(counter);
-        if (list[counter + 1]) {
-            counter += 1;
-            listIsEmpty = false;
-        } else {
-            listIsEmpty = true;
-        }
-    } while (!listIsEmpty);
-    isRunning = false;
+const emitError = (err, ctx) => {
+    ctx.status = err.status || 500;
+    ctx.type = 'application/json';
+    ctx.body = { error: true };
+    ctx.app.emit('error', err, ctx);
 }
 
-
-async function queue(id, handler) {
-    const game = Cacher.get(id);
-    if (game) {
-        handler(game);
-        return;
-    };
-
-
-    if (list.indexOf(id) === -1) {
-        list.push(id);
-    }
-    
-    if (!handlersBox[id]) handlersBox[id] = [];
-    handlersBox[id].push(handler);
-
-    runRequests();
-}
-
-const commonList = async ctx => {
+const getCommonGamesList = async ctx => {
     const { user_ids } = ctx.query;
     if (user_ids) {
         const ids = user_ids.split(',');
-        const lists = await Promise.all(ids.map(id => SteamService.getGamesListById(id, ctx.config.steam_key)));
+        let lists;
+
+        try {
+            lists = await Promise.all(ids.map(id => SteamService.getGamesListById(id, ctx.config.steam_key)));
+        } catch (err) {
+            emitError(err, ctx);
+        }
+        lists = lists.map(list => list.response.games);
         const commonGames = compare(lists);
 
         if (!commonGames) {
@@ -86,17 +33,23 @@ const commonList = async ctx => {
         const details = await Promise.all(
             commonGames.map((game) => {
                 return new Promise(async (resolve, reject) => {
-                    function setResult(result) {
+
+                    function catchResult(result) {
                         const data = Object.assign({}, result, game);
                         resolve(data);
                     }
-                    queue(game.appid, setResult);
+
+                    try {
+                        queue(game.appid, catchResult);
+                    } catch (err) {
+                        emitError(err, ctx);
+                    }
                 })
             })
         );
 
         const multiplayerGames = details
-            .filter(({ tags }) => ('Multiplayer' in tags))
+            .filter((game) => (game && ('Multiplayer' in game.tags)))
             .map((game) => {
                 const {
                     appid,
@@ -112,6 +65,13 @@ const commonList = async ctx => {
                     img_logo_url,
                 };
             })
+            .sort((a, b) => {
+                const first = a.name.toLowerCase();
+                const second = b.name.toLowerCase();
+                if (first < second) return -1;
+                if (first > second) return 1;
+                return 0;
+            });
 
         ctx.status = 200;
         ctx.body = multiplayerGames;
@@ -125,6 +85,6 @@ const router = new Router({
     prefix: '/games',
 });
 
-router.get('/common', commonList);
+router.get('/common', getCommonGamesList);
 
 export default router;

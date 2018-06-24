@@ -5,6 +5,7 @@ const user = async ctx => {
     const idRes = await SteamService.getUserByName(name, ctx.config.steam_key);
     if (idRes.response.success !== 1) {
         ctx.status = 404;
+        ctx.type = 'application/json';
         ctx.body = { success: 0 };
         return;
     }
@@ -14,9 +15,11 @@ const user = async ctx => {
 
     if (player) {
         ctx.status = 200;
+        ctx.type = 'application/json';
         ctx.body = { player, success: 1 };
     } else {
         ctx.status = 404;
+        ctx.type = 'application/json';
         ctx.body = { success: 0 };
     }
 }

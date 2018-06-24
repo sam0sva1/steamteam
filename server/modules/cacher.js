@@ -1,7 +1,8 @@
 import fs from 'fs';
 
 import { SteamSpyService } from '../services';
-import { Sleep, saveCachedData } from '../modules';
+import { saveCachedData } from '../modules';
+import queue from '../modules/queue';
 
 let cacheStorage = {};
 
@@ -35,11 +36,8 @@ async function cacheGameList(list) {
   const len = list.length;
 
   for (let i = 0; i < len; i += 1) {
-      const id = list[i];
-      const game = await SteamSpyService.getGameDetalesById(id);
-      const sleep = Sleep();
-      cacher.set(id, game);
-      await sleep;
+    const id = list[i];
+    queue(id);
   }
 
   console.timeEnd('cacheGameList');
