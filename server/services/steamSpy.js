@@ -1,4 +1,5 @@
-import { fetcher, Sleep } from '../modules';
+import fetcher from '../modules/fetcher';
+import Sleep from '../modules/sleep';
 
 
 const methods = {};

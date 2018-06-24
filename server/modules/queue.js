@@ -1,7 +1,7 @@
 import Sleep from '../modules/sleep';
 import Cacher from '../modules/cacher';
 import Errors from '../modules/errors';
-import { SteamSpyService } from '../services';
+import SteamSpyService from '../services/steamSpy';
 
 
 let list = [];

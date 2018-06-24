@@ -1,5 +1,5 @@
 // const fetching = require('../modules').fetching;
-import { fetcher } from '../modules';
+import fetcher from '../modules/fetcher';
 
 
 const methods = {};

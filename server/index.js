@@ -5,14 +5,15 @@ import Router from 'koa-router';
 import logger from 'koa-logger';
 import serve from 'koa-static';
 
-import { Configer, Cacher, saveCachedData } from './modules';
+import Cacher from './modules/cacher';
+import cacheWarming from './modules/cacheWarming';
 import { userRouter, gamesRouter } from './routes';
 
 const app = new Koa();
 const router = new Router();
 const port = 8080;
 
-const file = fs.readFileSync('./config.json');
+const file = fs.readFileSync(path.resolve(__dirname, '..', 'config.json'));
 app.context.config = JSON.parse(file);
 
 app.use(logger());
@@ -45,7 +46,19 @@ Server is running of port ${port}
 =================================
     `);
 
-    // Cacher.init('./cacheData/cached.json');
+    Cacher.init((setStorage) => {
+        const cachePath = path.resolve(__dirname, '..', 'cacheData', 'cached.json');
+        console.log('cachePath', cachePath);
+        if (fs.existsSync(cachePath)) {
+            const file = fs.readFileSync(cachePath);
+            const list = JSON.parse(file);
+            setStorage(list);
+
+            console.log('===> Cache is ready!');
+        } else {
+            cacheWarming('./CacheData/forCache.json');
+        }
+    });
 });
 
 process.on('SIGINT', function onSigterm () {
@@ -60,7 +73,7 @@ function shutdown() {
             process.exit(1);
         }
 
-        // saveCachedData(Cacher.getStorage());
+        Cacher.save('../cacheData');
         process.exit();
     });
 }

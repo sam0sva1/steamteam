@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import compare from '../modules/compare';
 import queue from '../modules/queue';
-import { SteamService } from '../services';
+import SteamService from '../services/steam';
 
 const emitError = (err, ctx) => {
     ctx.status = err.status || 500;
