@@ -1,0 +1,56 @@
+.player {
+    height: 70px;
+    display: flex;
+    align-items: center;
+
+    &:last-child {
+        & .player__info {
+            border-bottom: none;
+        }
+    }
+
+    &:hover {
+        & .player__cross {
+            opacity: 1;
+        }
+    }
+
+    &__img {
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        overflow: hidden;
+        margin: 0 20px;
+    }
+
+    &__info {
+        border-bottom: 1px solid #eaeaea;
+        height: 100%;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    &__name {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 16px;
+        max-width: 130px;
+    }
+
+    &__cross {
+        opacity: 0;
+        margin: 0 20px 0 auto;
+        cursor: pointer;
+        border: none;
+    
+        &:hover {
+            & div {
+                background-color: rgb(248, 148, 148);
+            }
+        }
+
+        &:focus {
+            opacity: 1;
+        }
+    }
+}

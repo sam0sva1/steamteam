@@ -3,6 +3,20 @@ import Router from 'koa-router';
 import SteamService from '../services/steam';
 
 
+const serializePlayer = (playerDraft) => {
+    const {
+        steamid,
+        personaname,
+        avatarmedium,
+    } = playerDraft;
+
+    return {
+        steamid,
+        personaname,
+        avatarmedium,
+    };
+};
+
 const router = new Router({
     prefix: '/user',
 });
@@ -24,11 +38,11 @@ router.get('/list', async ctx => {
             return;
         }
 
-        const data = 
+        const data = players.response.players.map(serializePlayer);
 
         ctx.status = 200;
         ctx.type = 'application/json';
-        ctx.body = { players: players.response.players, success: 1 };
+        ctx.body = { players: data, success: 1 };
     }
 });
 
@@ -46,17 +60,7 @@ router.get('/:name', async ctx => {
     const player = userData.response.players[0];
 
     if (player) {
-        const {
-            steamid,
-            personaname,
-            avatarmedium,
-        } = player;
-
-        const data = {
-            steamid,
-            personaname,
-            avatarmedium,
-        };
+        const data = serializePlayer(player);
 
         ctx.status = 200;
         ctx.type = 'application/json';

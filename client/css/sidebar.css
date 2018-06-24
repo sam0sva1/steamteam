@@ -1,0 +1,105 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 20px;
+
+    @mixin desktop {
+        width: 380px;
+    }
+
+    &__label {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        color: black;
+        margin: 30px 0;
+
+        @mixin desktop {
+            width: 280px;
+            margin: 30px auto;
+        }
+    }
+
+    &__block {
+        width: 100%;
+        min-height: 70px;
+        border-radius: 8px;
+        background-color: white;
+        margin: 0 auto;
+        font-size: 16px;
+        color: black;
+
+        @mixin desktop {
+            width: 280px;
+        }
+    }
+
+    &__input-block {
+        display: flex;
+        align-items: center;
+    }
+
+    &__input {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 16px;
+        margin: 0 20px;
+        flex-grow: 1;
+        border: none;
+        outline: none;
+
+        @mixin desktop {
+            font-size: 16px;
+            margin: 0 20px;
+            width: 170px;
+        }
+    }
+
+    &__input-button {
+        position: relative;
+        min-width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        margin-right: 20px;
+        border: 1px solid #eaeaea;
+
+        &:focus {
+            outline: none;
+        }
+
+        &_loading {
+            animation-name: cross-button-loader;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+        }
+    }
+
+    &__input-cross {
+        margin: 0 auto;
+        position: absolute;
+        top: calc(50% - 15px);
+        left: calc(50% - 15px);
+    }
+
+    &__players-block {
+        margin-top: 40px;
+    }
+
+    &__player {
+
+    }
+}
+
+@keyframes cross-button-loader {
+    20% {
+        border-left-width: 3px;
+    }
+    40% {
+        border-bottom-width: 3px;
+    }
+    60% {
+        border-right-width: 3px;
+    }
+    80% {
+        border-top-width: 3px;
+    }
+}

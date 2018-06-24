@@ -16,8 +16,8 @@
                         </div>
                     </div>
                 </header>
-                <main class="page__container container">
-                    <aside class="container__sidebar sidebar">
+                <main class="page__board board">
+                    <aside class="board__sidebar sidebar">
                         <div class="sidebar__label">
                             Players
                         </div>
@@ -37,7 +37,7 @@
                                 v-bind:class="{ 'sidebar__input-button_loading': checkingUserName }"
                             >
                                 <div
-                                    class="sidebar__cross sidebar__input-cross"
+                                    class="sidebar__cross sidebar__input-cross cross"
                                     v-bind:class="crossClasses"
                                 >
                                     <div></div>
@@ -56,7 +56,7 @@
                                         {{ player.personaname }}
                                     </div>
                                     <button
-                                        class="sidebar__cross player__cross"
+                                        class="sidebar__cross player__cross cross"
                                         @click="onPlayerCrossClick(player.steamid)"
                                     >
                                         <div></div>
@@ -67,7 +67,7 @@
                         </div>
                     </aside>
 
-                    <section v-if="players.length" class="container__game-list game-list">
+                    <section v-if="players.length" class="board__game-list game-list">
                         <div class="game-list__label">
                             Games
                             <span v-if="players.length < 2" class="game-list__message game-list__message_requirement">(requires more then one player)</span>

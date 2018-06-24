@@ -1,0 +1,29 @@
+.game-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 20px;
+
+    @mixin desktop {
+        width: 620px;
+    }
+
+    &__label {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        color: black;
+        margin: 30px 0;
+    }
+
+    &__message {
+        opacity: .4;
+    }
+
+    &__game {
+        margin-top: 16px;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+}
